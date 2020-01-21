@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 21:56:52 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 12:56:23 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:35:20 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_putstr(char *s)
 	}
 }
 
-int	number_length(int n)
+int		number_length(int n)
 {
 	int	i;
 	int	nb;
@@ -73,7 +73,7 @@ void	ft_putchar(char c)
 	g_counter++;
 }
 
-void	print_format(const char *format, list_type *structure)
+void	print_format(const char *format, t_list_type *structure)
 {
 	int		i;
 	char	*str;
@@ -85,17 +85,17 @@ void	print_format(const char *format, list_type *structure)
 		ft_putunsign(structure->unsign);
 	else if (format[i] == 's')
 		ft_putstr(structure->string);
-	else if (format[i] == 'c')
+	else if (format[i] == 'c' || format[i] == '%')
 		ft_putchar(structure->car);
 	else if (format[i] == 'x')
 		ft_putstr(dec_to_hexax(structure->unsign));
 	else if (format[i] == 'X')
-		ft_putstr(dec_to_hexaX(structure->unsign));
+		ft_putstr(dec_to_hexaxx(structure->unsign));
 	else if (format[i] == 'p')
 	{
 		str = malloc(3);
 		aux8(&str, structure);
 		ft_putstr(str);
-		//free str
+		free(str);
 	}
 }

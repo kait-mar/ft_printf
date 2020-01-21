@@ -6,17 +6,19 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 04:36:51 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 11:12:20 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/21 00:18:38 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	aux3(const char **format, list_type *structure)
+void	aux3(const char **format, t_list_type *structure)
 {
 	if (**format == '.')
 		(*format)++;
-	if ((**format == 'd' || **format == 'i') && structure->integer == 0)
+	if (((**format == 'd' || **format == 'i') &&
+	structure->integer == 0) || (**format == 'u' &&
+	structure->unsign == 0))
 		(*format)++;
 	else
 	{
@@ -27,10 +29,10 @@ void	aux3(const char **format, list_type *structure)
 	}
 }
 
-void	aux4(const char **format, list_type *structure, flag *s_flag)
+void	aux4(const char **format, t_list_type *structure, t_flag *flaag)
 {
 	if (find(*format, '*') == 1)
-		printf_flag(format, s_flag, structure);
+		printf_flag(format, flaag, structure);
 	else if (condition1(*format) == 1)
 		print_c(format, structure);
 	else if (condition2(*format, structure) == 1)
@@ -48,7 +50,7 @@ void	aux4(const char **format, list_type *structure, flag *s_flag)
 		print_left(format, structure);
 }
 
-int		condition4(const char *format, list_type *structure, int k, int j)
+int		condition4(const char *format, t_list_type *structure, int k, int j)
 {
 	if (((format[k] == 'd' || format[k] == 'i') && format[j] == '0' &&
 		format[j + 1] == '*' && structure->integer == 0)
@@ -60,7 +62,7 @@ int		condition4(const char *format, list_type *structure, int k, int j)
 		return (0);
 }
 
-void	aux5(const char *format, char *s, list_type *structure)
+void	aux5(const char *format, char *s, t_list_type *structure)
 {
 	int	i;
 

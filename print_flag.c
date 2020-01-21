@@ -5,22 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/04 17:27:18 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 11:23:38 by kait-mar         ###   ########.fr       */
+/*   Created: 2020/01/11 15:34:57 by kait-mar          #+#    #+#             */
+/*   Updated: 2020/01/21 00:59:46 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	which_format(const char *string, list_type *structure)
+void	which_format(const char *string, t_list_type *structure)
 {
 	int i;
+	int	sup;
 
-	i = 0;
-	if (string[i] == '%')
-		i++;
-	while (is_format(string[i]) == 0)
-		i++;
+	sup = g_counter;
+	i = support1(string);
 	if (string[i] == 'd' || string[i] == 'i')
 		ft_printf(string, structure->integer);
 	else if (string[i] == 's')
@@ -35,106 +33,36 @@ void	which_format(const char *string, list_type *structure)
 		ft_printf(string, structure->pointer);
 	else if (string[i] == '%')
 		ft_printf(string);
+	g_counter += sup;
 }
 
-void	construction_string(const char *format, flag *s_flag, list_type *structure)
+void	construction_string(const char **format,
+		t_flag *flaag, t_list_type *structure)
 {
 	char	*string;
-	int		i;
-	int		j;
 	int		k;
+	t_list3	*liste3;
 
+	liste3 = malloc(sizeof(t_list3));
 	string = ft_calloc(1, 2);
-	i = 0;
-	j = 0;
+	liste3->i = 0;
+	liste3->j = 0;
 	k = 0;
-	while (is_format(format[k]) == 0)
+	while (is_format((*format)[k]) == 0)
 		k++;
-	string[i++] = '%';
-	if (condition4(format, structure, k, j) == 1)
-	{
-		if (s_flag->integer1 < 0 && format[j] == '0')
-			j++;
-		while ((format[j] == '0' || format[j] == '-') || (format[j] != '*'))
-			string[i++] = format[j++];
-		string[i] = '\0';
-		string = ft_strjoin((const char *)string, ft_itoa(s_flag->integer1));
-		i = ft_strlen(string);
-		j++;
-		if (find(format, '.') == 1 && how_many(format, '*') == 2)
-		{
-			string[i++] = format[j++];
-			string[i] = '\0';
-			string = ft_strjoin((const char *)string, ft_itoa(s_flag->integer2));
-			i = ft_strlen(string);
-			j++;
-			string[i++] = format[j];
-			string[i] = '\0';
-			which_format((const char *)string, structure);
-		}
-		else if (find(format, '.') == 1 && how_many(format, '*') == 1)
-		{
-			i = ft_strlen(string);
-			while (is_format(format[j]) == 0 && format[j] != '*')
-				string[i++] = format[j++];
-			string[i++] = format[j];
-			string[i] = '\0';
-			which_format((const char *)string, structure);
-		}
-		else
-		{
-			string[i++] = format[j];
-			string[i] = '\0';
-			which_format((const char *)string, structure);
-		}
-	}
-	else if (format[j] == '0' && format[j + 1] == '*' && s_flag->integer1 < 0 && how_many(format, '*') == 1)
-	{
-		string[i] = '\0';
-		string = ft_strjoin((const char *)string, ft_itoa(s_flag->integer1));
-		while (is_format(format[j]) == 0 && format[j] != '\0')
-				j++;
-		string[ft_strlen(string)] = format[j];
-		string[ft_strlen(string) + 1] = '\0';
-		which_format((const char *)string, structure);
-	}
+	string[(liste3->i)++] = '%';
+	if ((*format)[indice(*format, '*') - 1] == '-' && flaag->integer1 == 0)
+		laast(format);
+	liste3->format = *format;
+	if (condition4(*format, structure, k, liste3->j) == 1)
+		support(&string, structure, flaag, liste3);
+	else if ((*format)[liste3->j] == '0' && (*format)[liste3->j + 1] == '*'
+			&& flaag->integer1 < 0 && how_many(*format, '*') == 1)
+		support5(&string, structure, flaag, liste3);
 	else
-	{
-		if (format[j] == '0' && format[j + 1] == '*' && s_flag->integer1 < 0)
-			j++;
-		while ((format[j] == '0' || format[j] == '-') || (format[j] != '*'))
-			string[i++] = format[j++];
-		string[i] = '\0';
-		string = ft_strjoin((const char *)string, ft_itoa(s_flag->integer1));
-		i = ft_strlen(string);
-		j++;
-		if (find(format, '.') == 1 && how_many(format, '*') == 2)
-		{
-			string[i++] = format[j++];
-			string[i] = '\0';
-			string = ft_strjoin((const char *)string, ft_itoa(s_flag->integer2));
-			i = ft_strlen(string);
-			j++;
-			string[i++] = format[j];
-			string[i] = '\0';
-			which_format((const char *)string, structure);
-		}
-		else if (find(format, '.') == 1 && how_many(format, '*') == 1)
-		{
-			i = ft_strlen(string);
-			while (is_format(format[j]) == 0 && format[j] != '*')
-				string[i++] = format[j++];
-			string[i++] = format[j];
-			string[i] = '\0';
-			which_format((const char *)string, structure);
-		}
-		else
-		{
-			string[i++] = format[j];
-			string[i] = '\0';
-			which_format((const char *)string, structure);
-		}
-	}
+		support9(&string, structure, flaag, liste3);
+	free(string);
+	free(liste3);
 }
 
 int		find(const char *string, char c)
@@ -151,7 +79,7 @@ int		find(const char *string, char c)
 	return (0);
 }
 
-char    *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
 	int		j;

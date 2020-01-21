@@ -6,13 +6,13 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 07:33:08 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 10:57:28 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/11 15:32:43 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	norm1(const char *format, int i, int test_0, list_type *structure)
+void	norm1(const char *format, int i, int test_0, t_list_type *structure)
 {
 	i -= 1;
 	if (test_0 == 0)
@@ -31,7 +31,7 @@ void	norm1(const char *format, int i, int test_0, list_type *structure)
 		ft_putchar('%');
 }
 
-void	norm2(const char *format, int i, list_type *structure)
+void	norm2(const char *format, int i, t_list_type *structure)
 {
 	i = absolue(i) - 1;
 	if (*format == 'c')
@@ -60,6 +60,7 @@ int		norm3(const char **format)
 	str[i] = '\0';
 	i = ft_atoi(str);
 	return (i);
+	free(str);
 }
 
 void	norm4(const char **format)
@@ -71,7 +72,8 @@ void	norm4(const char **format)
 	(*format)++;
 }
 
-void	norm5(const char **format, int count, int test_0, list_type *structure)
+void	norm5(const char **format, int count,
+		int test_0, t_list_type *structure)
 {
 	int	i;
 

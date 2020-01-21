@@ -6,33 +6,37 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 20:53:41 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 12:30:39 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:29:52 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_c(const char **format, list_type *structure)
+void	print_c(const char **format, t_list_type *structure)
 {
 	int		count;
-//	char	*str;
 	int		test_0;
 
 	count = 1;
 	test_0 = 0;
-	if (**format == '0' && find_point(*format, '-') == 0)
+	if (cond10(format) == 1)
+		help1(format, structure);
+	else
 	{
-		test_0 = 1;
-		while (**format == '0')
-			(*format)++;
+		if (**format == '0' && find_point(*format, '-') == 0)
+		{
+			test_0 = 1;
+			while (**format == '0')
+				(*format)++;
+		}
+		else if (find_point(*format, '-') == 1)
+		{
+			count = -1;
+			while (**format == '-' || **format == '0')
+				(*format)++;
+		}
+		norm5(format, count, test_0, structure);
 	}
-	else if (find_point(*format, '-') == 1)
-	{
-		count = -1;
-		while (**format == '-' || **format == '0')
-			(*format)++;
-	}
-	norm5(format, count, test_0, structure);
 }
 
 int		find_point(const char *string, char c)

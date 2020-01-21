@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-mar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 15:55:28 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 12:21:02 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/21 01:06:17 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 static int		white_digit(int c, int d)
 {
@@ -63,9 +63,7 @@ int				ft_atoi(const char *str)
 	return (number / 10);
 }
 
-int				ft_isdigit(int c)
+int				is_flag(char c)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	return (c == '*' || c == '.' || c == '-' || (c >= '0' && c <= '9'));
 }

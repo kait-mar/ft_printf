@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 04:16:03 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 11:33:31 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:30:20 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int		condition1(const char *format)
 {
-	return (find(format, '.') == 1 &&
+	return ((find(format, '.') == 1 &&
 			(format[indice(format, '.') + 1] == 'c' ||
-				format[indice(format, '.') + 1] == '%'));
+				format[indice(format, '.') + 1] == '%'))
+				|| condition_mod(format) == 1);
 }
 
-int		condition2(const char *format, list_type *structure)
+int		condition2(const char *format, t_list_type *structure)
 {
 	if (find(format, '.') == 1 &&
 			(is_width(format[indice(format, '.') + 1]) == 1 ||
@@ -27,7 +28,8 @@ int		condition2(const char *format, list_type *structure)
 		|| format[indice(format, '.') + 1] == 's' ||
 		((format[indice(format, '.') + 1] == 'p' ||
 				format[indice(format, '.') + 1] == 'x' ||
-				format[indice(format, '.') + 1] == 'X')
+				format[indice(format, '.') + 1] == 'X' ||
+				format[indice(format, '.') + 1] == 'u')
 			&& structure->unsign == 0)))
 		return (1);
 	else
@@ -79,5 +81,5 @@ int		condition3(const char *format)
 {
 	return ((*format == '.' && (*(format + 1) == 'd' || *(format + 1) == 'x' ||
 					*(format + 1) == 'X' || *(format + 1) == 'p' ||
-					*(format + 1) == 'i')));
+					*(format + 1) == 'i' || *(format + 1) == 'u')));
 }

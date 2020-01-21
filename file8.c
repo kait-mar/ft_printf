@@ -6,13 +6,13 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 08:14:27 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 11:02:51 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:31:32 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		condition9(const char **format, list_type *structure, int k)
+int		condition9(const char **format, t_list_type *structure, int k)
 {
 	if ((((((*format)[k] == 'x' || (*format)[k] == 'X') &&
 		structure->unsign == 0) || ((*format)[k] == 'p' &&
@@ -56,7 +56,7 @@ void	norm7(int i)
 		ft_putchar(' ');
 }
 
-void	norm8(const char **format, list_type *structure, int i, int j)
+void	norm8(const char **format, t_list_type *structure, int i, int j)
 {
 	if (structure->integer < 0)
 		ft_putchar('-');
@@ -64,7 +64,7 @@ void	norm8(const char **format, list_type *structure, int i, int j)
 	fct2(*format, structure, absolue(i), j);
 }
 
-void	norm9(const char **format, list_type *structure, int i)
+void	norm9(const char **format, t_list_type *structure, int i)
 {
 	if (structure->integer < 0)
 		ft_putchar('-');

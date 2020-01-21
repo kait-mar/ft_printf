@@ -6,15 +6,15 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 15:05:21 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 05:30:48 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/21 00:36:05 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	printf_flag(const char **format, flag *s_flag, list_type *structure)
+void	printf_flag(const char **format, t_flag *flaag, t_list_type *structure)
 {
-	construction_string(*format, s_flag, structure);
+	construction_string(format, flaag, structure);
 	while (**format != '\0' && is_format(**format) == 0)
 		(*format)++;
 	(*format)++;
@@ -42,7 +42,7 @@ void	*ft_calloc(size_t count, size_t size)
 	return (NULL);
 }
 
-int	print_right_left(const char **format, list_type *structure)
+int		print_right_left(const char **format, t_list_type *structure)
 {
 	int		i;
 	char	*s;
@@ -57,13 +57,14 @@ int	print_right_left(const char **format, list_type *structure)
 	while (is_width(**format) == 1)
 		s[i++] = *(*format)++;
 	s[i] = '\0';
-	if (find(*format, '.') == 1 && ((*format)[indice(*format, '.') + 1] == 'd' || (*format)[indice(*format, '.') + 1] == 'i') && structure->integer == 0)
+	if (cond12(format, structure) == 1)
 	{
 		count = 1;
 		aux6(format, s);
 	}
 	else
 		aux5(*format, s, structure);
+	free(s);
 	return (count);
 }
 
@@ -87,26 +88,29 @@ void	ft_putunsign(unsigned int n)
 		ft_putchar(tab[i]);
 }
 
-flag	*construction_flag(const char *format, va_list list)
+t_flag	*construction_flag(const char *format, va_list list)
 {
-	flag	*structure;
+	t_flag	*structure;
 	int		i;
 
-	i = 0;
-	structure = malloc(sizeof(flag));
-	while (format[i] != '\0' && format[i] != '%')
-		i++;
+	structure = malloc(sizeof(t_flag));
+	i = skip(format);
 	if (format[i] == '%')
 	{
-		while (format[i] != '\0' && format[i] != '*')
-			i++;
-		if (format[i] == '*')
-		{	
-			structure->integer1 = (int)va_arg(list, int);
-			i++;
+		i++;
+		if (find((format + i), '*') == 1)
+		{
+			while (format[i] != '\0' && is_format(format[i]) == 0
+				&& format[i] != '*')
+				i++;
+			if (format[i] == '*')
+			{
+				structure->integer1 = (int)va_arg(list, int);
+				i++;
+			}
+			if (format[i] == '.' && format[i + 1] == '*')
+				structure->integer2 = (int)va_arg(list, int);
 		}
-		if (format[i] == '.' && format[i + 1] == '*')
-			structure->integer2 = (int)va_arg(list, int);
 	}
 	return (structure);
 }

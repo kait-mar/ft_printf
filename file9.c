@@ -6,20 +6,20 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 08:37:42 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 11:04:59 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:31:46 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	fct4(const char **format, list_type *structure, int i, int j)
+void	fct4(const char **format, t_list_type *structure, int i, int j)
 {
 	fct2(*format, structure, i, j);
 	if (structure->integer < 0)
 		ft_putchar('-');
 }
 
-void	fct5(const char **format, list_type *structure, int i, int j)
+void	fct5(const char **format, t_list_type *structure, int i, int j)
 {
 	if (j > 0 && j >= absolue(i))
 		fct1(*format, structure, j);

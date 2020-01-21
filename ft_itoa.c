@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kait-mar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 13:28:42 by kait-mar          #+#    #+#             */
-/*   Updated: 2019/10/27 21:55:56 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/21 01:06:52 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 static char	*allocation_negative(int n, int len, long num)
 {
@@ -72,4 +72,10 @@ char		*ft_itoa(int n)
 		}
 		return (integer);
 	}
+}
+
+void		laast(const char **format)
+{
+	while (**format == '-')
+		(*format)++;
 }

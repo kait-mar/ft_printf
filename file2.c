@@ -6,7 +6,7 @@
 /*   By: kait-mar <kait-mar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 21:48:44 by kait-mar          #+#    #+#             */
-/*   Updated: 2020/01/08 10:23:09 by kait-mar         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:29:22 by kait-mar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		unsign_length(unsigned long long n)
 	return (i);
 }
 
-int		negative(const char *format, list_type *structure)
+int		negative(const char *format, t_list_type *structure)
 {
 	int	i;
 	int	count;
@@ -44,7 +44,7 @@ int		negative(const char *format, list_type *structure)
 	return (count);
 }
 
-int		types_absolue(const char *format, list_type *structure)
+int		types_absolue(const char *format, t_list_type *structure)
 {
 	int	i;
 
@@ -62,13 +62,13 @@ int		types_absolue(const char *format, list_type *structure)
 	else if (format[i] == 'x')
 		i = ft_strlen(dec_to_hexax(structure->unsign));
 	else if (format[i] == 'X')
-		i = ft_strlen(dec_to_hexaX(structure->unsign));
+		i = ft_strlen(dec_to_hexaxx(structure->unsign));
 	else if (format[i] == 'p')
 		i = ft_strlen(dec_to_hexax(structure->pointer)) + 2;
 	return (i);
 }
 
-void	put_string(const char *format, int j, list_type *structure)
+void	put_string(const char *format, int j, t_list_type *structure)
 {
 	int		k;
 	char	*string;
@@ -118,4 +118,5 @@ void	print_negative(const char **format)
 	while (is_format(**format) == 0)
 		(*format)++;
 	(*format)++;
+	free(s);
 }
